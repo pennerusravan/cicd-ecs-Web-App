@@ -1,11 +1,9 @@
-FROM ubuntu:22.04
+FROM nginx:alpine
 
-RUN apt update -y \
-    && apt install apache2 apache2-utils -y \
-    && apt clean
+# Remove default nginx html
+RUN rm -rf /usr/share/nginx/html/*
 
-COPY website/ /var/www/html/
+# Copy our static html
+COPY index.html /usr/share/nginx/html/index.html
 
 EXPOSE 80
-
-CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
